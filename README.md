@@ -8,7 +8,7 @@ The **BMI Tracker** is a web-based application developed using **Flask**, **HTML
 
 ---
 
-##  Implementation Process (Brief)
+##  Implementation Process 
 
 - Set up a virtual environment and installed required libraries (`Flask`, `pandas`, `scikit-learn`).
 - Created a sample dataset with height, weight, and BMI values.
@@ -26,7 +26,7 @@ The **BMI Tracker** is a web-based application developed using **Flask**, **HTML
 ## Features
 
 -  Machine learning–powered BMI prediction
--  Category-specific health advice (10+ tips)
+-  Category-specific health advice
 -  Dynamic UI with styled form and animations
 -  Background and feedback change based on category
 -  Clean user-friendly interface
