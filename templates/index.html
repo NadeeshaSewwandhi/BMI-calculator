@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>BMI Tracker</title>
+    <style>
+        /* Full page setup */
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            overflow: hidden; /* prevent scrollbars */
+            background: url('/static/fitness1.jpg') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+        }
+
+        /* Blur overlay on background */
+        .blur-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: inherit;
+            filter: blur(8px);
+            z-index: -1;
+        }
+
+        /* Container for the content - centered form */
+        .container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+            color: #fff;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
+        }
+
+        /* Blur effect on form title */
+        h1 {
+            margin-bottom: 20px;
+            font-size: 3rem;
+            color: white;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+            
+        }
+
+        /* The form box */
+        .form-box {
+            background-color: rgba(255, 255, 255, 0.85);
+            padding: 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.3);
+            color: #333;
+            width: 320px;
+            opacity: 7px;
+
+        }
+
+        /* Labels in blue */
+        label {
+            color: #1E90FF; /* Dodger Blue */
+            font-weight: bold;
+            
+            text-shadow: none; 
+        }
+
+        /* Input text white with dark background */
+        input[type="text"] {
+            filter: none;
+            color: white;
+            background-color: #333;
+            border: 1px solid #1E90FF;
+            padding: 10px;
+            margin-top: 8px;
+            border-radius: 6px;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        /* Placeholder text white but lighter */
+        input::placeholder {
+            color: #ccc;
+        }
+
+        /* Button with blue background and white text */
+        button {
+            background-color: #1E90FF; /* Dodger Blue */
+            color: white;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            margin-top: 18px;
+            padding: 10px;
+            width: 100%;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0b60d1; /* Darker blue on hover */
+        }
+
+        ul {
+            margin-top: 20px;
+            color: #222;
+        }
+
+        /* Bubble animation container */
+        .bubbles {
+            position: fixed;
+            left: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        /* Individual bubble style */
+        .bubble {
+            position: absolute;
+            bottom: 0;
+            background: rgba(229, 233, 235, 0.6);
+            border-radius: 50%;
+            opacity: 0.5;
+            animation-name: rise;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: infinite;
+        }
+
+        /* Different sizes and animation durations for variety */
+        .bubble:nth-child(1) {
+            width: 30px;
+            height: 30px;
+            left: 0;
+            animation-duration: 7s;
+            animation-delay: 0s;
+        }
+        .bubble:nth-child(2) {
+            width: 15px;
+            height: 15px;
+            left: 40px;
+            animation-duration: 5s;
+            animation-delay: 2s;
+        }
+        .bubble:nth-child(3) {
+            width: 20px;
+            height: 20px;
+            left: 70px;
+            animation-duration: 8s;
+            animation-delay: 4s;
+        }
+        .bubble:nth-child(4) {
+            width: 18px;
+            height: 18px;
+            left: 100px;
+            animation-duration: 6s;
+            animation-delay: 1s;
+        }
+        .bubble:nth-child(5) {
+            width: 22px;
+            height: 22px;
+            left: 130px;
+            animation-duration: 7.5s;
+            animation-delay: 3s;
+        }
+
+        /* Bubble rising animation */
+        @keyframes rise {
+            0% {
+                transform: translateY(0);
+                opacity: 0.7;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-400px);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="blur-overlay"></div>
+
+    <div class="bubbles">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+    </div>
+
+    <div class="container">
+        <h1>BMI Tracker</h1>
+
+        <div class="form-box">
+            <form method="POST">
+                <label for="height">Height (meters):</label>
+                <input type="text" id="height" name="height" required placeholder="ex : 1.75"><br>
+
+                <br> <label for="weight">Weight (kg):</label>
+                <input type="text" id="weight" name="weight" required placeholder="ex : 70">
+
+                <button type="submit">Calculate BMI</button>
+            </form>
+
+            {% if result %}
+                <h3>{{ result }}</h3>
+                <h4>Health Advice:</h4>
+                <ul>
+                    {% for tip in tips %}
+                        <li>{{ tip }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
